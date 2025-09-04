@@ -1,0 +1,130 @@
+import { useState } from "react";
+
+const clientesData = [
+  {
+    id: 1,
+    logo: "/clientes/logo1.png",
+    image: "/clientes/proyecto1.png",
+    name: "Cliente 1",
+    info: "lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  },
+  {
+    id: 2,
+    logo: "/clientes/logo2.png",
+    image: "/clientes/proyecto2.png",
+    name: "Cliente 2",
+    info: "lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  },
+  {
+    id: 3,
+    logo: "/clientes/logo3.png",
+    image: "/clientes/proyecto3.png",
+    name: "Cliente 3",
+    info: "lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  },
+];
+
+export default function Clientes() {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedClient, setSelectedClient] = useState(null);
+
+  const openModal = (client) => {
+    setSelectedClient(client);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedClient(null);
+    setModalOpen(false);
+  };
+
+  return (
+    <section id="clientes" className="py-16 bg-gray-50">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
+          Nuestros Clientes
+        </h2>
+        <p className="text-center text-gray-600 mb-8">
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Blanditiis,
+          omnis.
+        </p>
+
+        {/* Slider de logos centrado y con scroll-snap */}
+        <div className="flex overflow-x-auto gap-6 py-4 justify-center scroll-pl-4 snap-x snap-mandatory scrollbar-hide">
+          {clientesData.map((cliente) => (
+            <div
+              key={cliente.id}
+              className="flex-shrink-0 w-32 h-32 bg-white shadow-lg rounded-lg flex items-center justify-center cursor-pointer hover:scale-105 transition-transform snap-center"
+              onClick={() => openModal(cliente)}
+            >
+              <img
+                src={cliente.logo}
+                alt={cliente.name}
+                className="max-w-full max-h-full object-contain"
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Botón CTA debajo del slider */}
+        <div className="text-center mt-6">
+          <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+            Contáctanos
+          </button>
+        </div>
+
+        {/* Modal */}
+        {modalOpen && selectedClient && (
+          <div
+            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+            onClick={closeModal}
+          >
+            <div
+              className="bg-white rounded-lg shadow-lg max-w-4xl w-full p-6 relative flex flex-col gap-4"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Contenedor de imágenes */}
+              <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
+                {/* Logo */}
+                <div className="md:w-1/3 flex items-center justify-center">
+                  <img
+                    src={selectedClient.logo}
+                    alt={selectedClient.name}
+                    className="max-w-full max-h-32 object-contain"
+                  />
+                </div>
+
+                {/* Imagen del proyecto */}
+                <div className="md:w-2/3 flex items-center justify-center">
+                  <img
+                    src={selectedClient.image}
+                    alt={`${selectedClient.name} proyecto`}
+                    className="w-full h-48 object-cover rounded"
+                  />
+                </div>
+              </div>
+
+              {/* Texto centrado */}
+              <p className="text-gray-700 text-center">{selectedClient.info}</p>
+
+              {/* Botón CTA centrado */}
+              <div className="flex justify-center">
+                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                  Contáctanos
+                </button>
+              </div>
+
+              {/* Botón cerrar */}
+              <button
+                className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-xl font-bold"
+                onClick={closeModal}
+              >
+                ×
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}

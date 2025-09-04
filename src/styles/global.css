@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: #2563eb; /* Azul Tailwind 600 */
+}
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+  color: #1e40af; /* Azul Tailwind 800 */
+}

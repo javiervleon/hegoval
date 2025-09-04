@@ -1,5 +1,5 @@
 {
-  "name": "eccentric-ellipse",
+  "name": "hegoval",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -9,6 +9,15 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.13.5"
+    "@astrojs/react": "^4.3.0",
+    "@tailwindcss/vite": "^4.1.12",
+    "astro": "^5.13.5",
+    "dotenv": "^17.2.1",
+    "framer-motion": "^12.23.12",
+    "lucide-react": "^0.542.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "swiper": "^11.2.10",
+    "tailwindcss": "^4.1.12"
   }
 }
