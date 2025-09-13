@@ -48,18 +48,19 @@ export default function HeroSlider() {
 
   return (
     <section id="home" className="flex flex-col items-center">
-      <div className="text-center mb-8">
-        <h1 className="text-6xl font-semibold text-gray-400">
+      {/* Claim text y párrafo */}
+      <div className="text-center mb-8 px-4 max-w-5xl mx-auto">
+        <h1 className="text-5xl md:text-6xl font-semibold text-gray-400">
           CLAIM TEXT - CLAIM TEXT
         </h1>
-        <p className="center text-lg text-gray-900 font-medium mt-4 mb-2 w-200">
+        <p className="text-lg text-gray-900 font-medium mt-6 mb-4 mx-auto max-w-3xl">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam mollitia
           temporibus incidunt deserunt molestiae? Officia, sapiente quaerat
           neque vero eos in praesentium rem aliquam commodi optio aut.
           Laboriosam, minima quae?
         </p>
       </div>
-      <div className="w-full max-w-5xl rounded-xl overflow-hidden shadow-lg relative">
+      <div className="w-full max-w-5xl md:rounded-xl overflow-hidden shadow-lg relative">
         <Swiper
           modules={[Navigation, Autoplay, Pagination]}
           navigation={{
@@ -70,7 +71,7 @@ export default function HeroSlider() {
           autoplay={{ delay: 5000, disableOnInteraction: false }}
           loop
           onSwiper={(swiper) => (swiperRef.current = swiper)}
-          className="rounded-xl"
+          className="md:rounded-xl"
         >
           {slides.map((slide, idx) => (
             <SwiperSlide key={idx}>
