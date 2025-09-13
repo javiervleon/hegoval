@@ -6,6 +6,7 @@ import Productos from "../components/Productos.jsx";
 import Contacto from "./Contacto.jsx";
 import Footer from "./Footer.jsx";
 import Clientes from "./Clientes.jsx";
+import Features from "./Features.jsx";
 
 // Datos de ejemplo
 const categoriesData = [
@@ -58,6 +59,7 @@ export default function Landing() {
 
       <main className="pt-16">
         <HeroSlider client:load />
+        <Features client:load />
         <QuienesSomos client:load />
         <Productos
           categories={categoriesData}

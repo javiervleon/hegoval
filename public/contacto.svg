@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 231.39 70.17">
+  <defs>
+    <style>
+      .cls-1 {
+        isolation: isolate;
+      }
+
+      .cls-2 {
+        fill: #020202;
+      }
+
+      .cls-3 {
+        fill: #99bbce;
+        mix-blend-mode: multiply;
+      }
+
+      .cls-4 {
+        letter-spacing: 0em;
+      }
+
+      .cls-5 {
+        fill: #fff;
+        font-family: Exo2-Regular, 'Exo2 Regular';
+        font-size: 28.25px;
+      }
+
+      .cls-6 {
+        letter-spacing: 0em;
+      }
+
+      .cls-7 {
+        letter-spacing: 0em;
+      }
+
+      .cls-8 {
+        letter-spacing: -.01em;
+      }
+
+      .cls-9 {
+        letter-spacing: .01em;
+      }
+    </style>
+  </defs>
+  <g class="cls-1">
+    <g id="Capa_2" data-name="Capa 2">
+      <g id="Home">
+        <polygon class="cls-3" points="231.39 70.17 6.98 70.17 0 63.18 224.41 0 231.39 6.98 231.39 70.17"/>
+        <rect class="cls-2" width="224.41" height="63.18"/>
+        <text class="cls-5" transform="translate(60.47 39.64)"><tspan class="cls-8" x="0" y="0">C</tspan><tspan x="16.08" y="0">o</tspan><tspan class="cls-7" x="31.59" y="0">n</tspan><tspan x="47.16" y="0">ta</tspan><tspan class="cls-9" x="70.12" y="0">c</tspan><tspan class="cls-6" x="83.15" y="0">t</tspan><tspan class="cls-4" x="92.33" y="0">o</tspan></text>
+      </g>
+    </g>
+  </g>
+</svg>

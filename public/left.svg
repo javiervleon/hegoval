@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Capa_2" data-name="Capa 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 46.92 78.67">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-2 {
+        fill: #929293;
+      }
+    </style>
+    <symbol id="Flecha_24" data-name="Flecha 24" viewBox="0 0 21.38 35.86">
+      <g>
+        <rect class="cls-1" width="21.38" height="35.86"/>
+        <polygon class="cls-2" points="0 35.86 10.37 17.93 0 0 11.01 0 21.38 17.93 11.01 35.86 0 35.86"/>
+      </g>
+    </symbol>
+  </defs>
+  <g id="Home">
+    <use width="21.38" height="35.86" transform="translate(46.92 78.67) rotate(-180) scale(2.19)" xlink:href="#Flecha_24"/>
+  </g>
+</svg>

@@ -9,3 +9,24 @@
 .swiper-button-next:hover {
   color: #1e40af; /* Azul Tailwind 800 */
 }
+
+.barraSuperior {
+  background-color: #0e65b7;
+}
+
+.botonSlider {
+  background-color: #0e65b7;
+}
+
+.botonMenu {
+  background-color: #49a4d6;
+}
+
+.btnElement {
+  padding: 10px;
+}
+
+.btnElement:hover {
+  background-color: #0e65b7;
+  color: white;
+}
