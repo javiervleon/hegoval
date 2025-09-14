@@ -1,14 +1,22 @@
+import { FaWhatsapp, FaPhone, FaMapPin } from "react-icons/fa";
+import { MdMailOutline } from "react-icons/md";
+
 export default function Contacto() {
   return (
-    <section id="contacto" className="py-16 bg-gray-50">
+    <section id="contacto" className="relative overflow-x-hidden py-16 mt-2">
+      <img
+        src="/bg-blue.svg"
+        alt=""
+        className="absolute top-0 right-12 w-24 md:w-32 pointer-events-none select-none"
+      />
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-400">
           Contacto
         </h2>
 
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Formulario */}
-          <div className="flex-1 bg-white p-6 rounded-lg shadow-lg">
+          <div className="flex-1 p-6">
             <form className="flex flex-col gap-4">
               <label className="font-semibold">Nombre</label>
               <input
@@ -42,7 +50,7 @@ export default function Contacto() {
 
           {/* Mapa e info */}
           <div className="flex-1 flex flex-col gap-4">
-            <div className="w-full h-64 lg:h-full bg-gray-200 rounded-lg overflow-hidden">
+            <div className="w-full h-64 lg:h-full overflow-hidden">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!..."
                 width="100%"
@@ -53,14 +61,27 @@ export default function Contacto() {
                 referrerPolicy="no-referrer-when-downgrade"
               ></iframe>
             </div>
+          </div>
+        </div>
+        <div className="p-4 mt-2">
+          <h3 className="font-semibold text-lg mb-2">Contáctanos</h3>
+          <div className="flex">
+            <span className="flex mx-2">
+              <FaPhone className="h-5 w-5 mx-2" /> Teléfono:
+              <a href="tel:+56912345678"> +56 9 1234 5678</a>
+            </span>
+            <span className="flex mx-2">
+              <MdMailOutline className="h-6 w-6 mx-2" /> Email:{" "}
+              <a href="mailto:mail@empresa.com">info@empresa.com</a>
+            </span>
+            <span className="flex mx-2">
+              <FaWhatsapp className="h-6 w-6 mx-2" /> WhatsApp: +56 9 1234 5678{" "}
+            </span>
 
-            <div className="bg-white p-4 rounded-lg shadow-lg">
-              <h3 className="font-semibold text-lg mb-2">Contáctanos</h3>
-              <p>📞 Teléfono: +56 9 1234 5678</p>
-              <p>✉️ Email: info@empresa.com</p>
-              <p>💬 WhatsApp: +56 9 1234 5678</p>
-              <p>🏢 Dirección: Calle Falsa 123, Ciudad, País</p>
-            </div>
+            <span className="flex mx-2">
+              <FaMapPin className="mx-2 w-5 h-5" /> Dirección: Calle Falsa 123,
+              Ciudad, País
+            </span>
           </div>
         </div>
       </div>

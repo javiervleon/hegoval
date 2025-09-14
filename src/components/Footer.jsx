@@ -1,14 +1,35 @@
+import { FaWhatsapp, FaPhone, FaMapPin } from "react-icons/fa";
+import { MdMailOutline } from "react-icons/md";
+
 export default function Footer() {
   return (
     <footer className="bg-gray-800 text-gray-200 py-10 w-full">
-      <div className="w-full px-4 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 text-center md:text-left">
+      <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Información de la empresa */}
         <div>
           <h3 className="font-bold text-lg mb-4">Nuestra Empresa</h3>
           <p>Somos una empresa dedicada a brindar soluciones innovadoras.</p>
-          <p className="mt-2">🏢 Calle Falsa 123, Ciudad, País</p>
-          <p>📞 +56 9 1234 5678</p>
-          <p>✉️ info@empresa.com</p>
+          <div>
+            <div>
+              <span className="flex mx-2">
+                <FaPhone className="h-5 w-5 mx-2" /> Teléfono:
+                <a href="tel:+56912345678"> +56 9 1234 5678</a>
+              </span>
+              <span className="flex mx-2">
+                <MdMailOutline className="h-6 w-6 mx-2" /> Email:{" "}
+                <a href="mailto:mail@empresa.com">info@empresa.com</a>
+              </span>
+              <span className="flex mx-2">
+                <FaWhatsapp className="h-6 w-6 mx-2" /> WhatsApp: +56 9 1234
+                5678{" "}
+              </span>
+
+              <span className="flex mx-2">
+                <FaMapPin className="mx-2 w-5 h-5" /> Dirección: Calle Falsa
+                123, Ciudad, País
+              </span>
+            </div>
+          </div>
         </div>
 
         {/* Links útiles */}
@@ -22,7 +43,7 @@ export default function Footer() {
             </li>
             <li>
               <a href="#about" className="hover:text-white transition">
-                Quiénes Somos
+                Quienes Somos
               </a>
             </li>
             <li>

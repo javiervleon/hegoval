@@ -11,23 +11,61 @@ export default function Header({
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
-
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   // Detectar scroll y tamaño de pantalla
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 150);
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    // Marcar que el componente está montado
+    setMounted(true);
 
+    const handleScroll = () => {
+      // Múltiples formas de obtener scroll
+      const scrollY1 = window.scrollY;
+      const scrollY2 = window.pageYOffset;
+      const scrollY3 = document.documentElement.scrollTop;
+      const scrollY4 = document.body.scrollTop;
+
+      const scrollY = scrollY1 || scrollY2 || scrollY3 || scrollY4;
+      const shouldBeScrolled = scrollY > 150;
+
+      setScrolled(shouldBeScrolled);
+    };
+
+    const handleResize = () => {
+      const width = window.innerWidth;
+      const mobile = width < 768;
+      setIsMobile(mobile);
+    };
+
+    // Ejecutar inmediatamente
     handleResize();
-    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    // Agregar event listeners a múltiples elementos
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    document.addEventListener("scroll", handleScroll, { passive: true });
+    document.body.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleResize);
+
+    // Test manual con diferentes métodos
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("scroll", handleScroll);
+      document.body.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   const normalizeText = (text) =>
     text
@@ -64,15 +102,26 @@ export default function Header({
   }, [query, categories, products, sections, onSearch]);
 
   const handleSelect = (item) => {
-    if (onSelect) onSelect(item); // Esto actualiza el estado en Landing.jsx
+    if (onSelect) onSelect(item);
 
     setQuery("");
     setResults([]);
 
-    let elementId = "productos"; // default
+    if (item.type === "category") {
+      setSelectedCategory(item.id);
+      setSelectedProduct(null);
+    } else if (item.type === "product") {
+      setSelectedProduct(item.id);
+      setSelectedCategory(item.categoryId);
+    } else {
+      // section
+      setSelectedCategory(null);
+      setSelectedProduct(null);
+    }
+
+    // Scroll a la sección de productos o a la sección específica
+    let elementId = "productos";
     if (item.type === "section") elementId = item.id;
-    if (item.type === "category") elementId = `category-${item.id}`;
-    if (item.type === "product") elementId = `category-${item.categoryId}`;
 
     setTimeout(() => {
       const element = document.getElementById(elementId);
@@ -81,18 +130,13 @@ export default function Header({
     }, 50);
   };
 
-  const scrollToSection = (id) => {
-    const element = document.getElementById(id);
-    if (element) element.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <header className="w-full z-50 relative">
       {/* Barra superior */}
       <div className="fixed top-0 left-0 w-full z-50 barraSuperior">
         <div className="container mx-auto flex items-center justify-between px-4 py-2 relative">
           {/* Buscador */}
-          <div className="flex flex-col relative w-full md:w-auto">
+          <div className="flex flex-col relative w-full px-14 md:w-auto">
             <div className="flex items-center gap-2">
               <Search className="w-5 h-5 text-white" />
               <input
@@ -148,118 +192,117 @@ export default function Header({
           </div>
         </div>
       </div>
+
       {/* Logo con fondo decorativo */}
-      <div className="pt-12 pb-12 bg-white relative overflow-hidden">
-        {/* Imagen decorativa */}
-        <div className="mt-8 absolute inset-0 flex justify-center items-center">
+      <div className="pt-12 sm:pb-8 bg-white relative">
+        {/* Imagen decorativa pegada abajo */}
+        <div className="absolute top-10 sm:top-7 left-1/2 -translate-x-1/2 w-full flex justify-center">
           <img
             src="/decoheader.svg"
             alt="Decoración detrás del logo"
-            className="max-w-[800px] w-full"
+            className="w-full max-w-[1300px]"
           />
         </div>
 
-        {/* Logo */}
-        <div className="container mx-auto flex justify-center my-4 relative z-10">
+        {/* Logo encima */}
+        <div className="container mx-auto flex justify-center relative z-10">
           <img
             src="/logo.svg"
             alt="Logo Empresa"
-            className="h-16 md:h-20 my-5"
+            className="h-22 sm:h-48 my-16 sm:my-22"
           />
         </div>
       </div>
+
       {/* Menú horizontal desktop */}
       <nav
-        className={`hidden md:flex bg-gray-200 transition-all duration-300 ${
+        className={`hidden md:flex relative transition-all duration-300 ${
           scrolled ? "hidden" : "flex"
         }`}
       >
-        <div className="container mx-auto flex justify-center gap-6 py-3">
+        {/* Fondo con tramas y barra gris */}
+        <div className="absolute inset-0 flex justify-center items-center h-15 z-0 overflow-hidden">
+          {/* Contenedor de barra gris y tramas */}
+          <div className="relative flex items-center h-1 w-260 mx-auto">
+            {/* Barra gris */}
+            <div className="absolute inset-0 bg-gray-200 h-2 w-full"></div>
+
+            {/* Trama izquierda */}
+            <img
+              src="/trama.svg"
+              alt="trama izquierda"
+              className="absolute left-[-400px] top-1/2 -translate-y-1/2 h-[45px] object-cover"
+            />
+
+            {/* Trama derecha */}
+            <img
+              src="/trama.svg"
+              alt="trama derecha"
+              className="absolute right-[-400px] top-1/2 -translate-y-1/2 h-[45px] object-cover"
+            />
+          </div>
+        </div>
+        {/* Menú centrado */}
+        <div className="container mx-auto flex justify-center gap-6 items-center h-14 relative z-10">
           <button
             onClick={() => scrollToSection("home")}
             className="transition-transform duration-300 hover:scale-105"
           >
-            <img
-              src="/inicio.svg"
-              alt="Inicio"
-              className="w-[140px] h-[50px]"
-            />
+            <img src="/inicio.svg" alt="Inicio" className="h-[55px]" />
           </button>
 
           <button
             onClick={() => scrollToSection("home")}
             className="transition-transform duration-300 hover:scale-105"
           >
-            <img
-              src="/nosotros.svg"
-              alt="Nosotros"
-              className="w-[140px] h-[50px]"
-            />
+            <img src="/nosotros.svg" alt="Nosotros" className="h-[55px]" />
           </button>
 
           <button
             onClick={() => scrollToSection("productos")}
             className="transition-transform duration-300 hover:scale-105"
           >
-            <img
-              src="/productos.svg"
-              alt="Productos"
-              className="w-[140px] h-[50px]"
-            />
+            <img src="/productos.svg" alt="Productos" className="h-[55px]" />
           </button>
 
           <button
             onClick={() => scrollToSection("clientes")}
             className="transition-transform duration-300 hover:scale-105"
           >
-            <img
-              src="/clientes.svg"
-              alt="Clientes"
-              className="w-[140px] h-[50px]"
-            />
+            <img src="/clientes.svg" alt="Clientes" className="h-[55px]" />
           </button>
 
           <button
             onClick={() => scrollToSection("contacto")}
             className="transition-transform duration-300 hover:scale-105"
           >
-            <img
-              src="/contacto.svg"
-              alt="Contacto"
-              className="w-[140px] h-[50px]"
-            />
+            <img src="/contacto.svg" alt="Contacto" className="h-[55px]" />
           </button>
         </div>
       </nav>
-      {/* Botón flotante */}
-      {typeof window !== "undefined" && (
-        <>
-          {isMobile && (
-            <button
-              className="fixed top-4 right-4 p-4 rounded-full botonMenu text-white shadow-lg z-50 md:hidden transition-transform duration-300 hover:scale-110"
-              onClick={() => setMenuOpen(!menuOpen)}
-            >
-              {menuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
-            </button>
-          )}
-          {!isMobile && scrolled && (
-            <button
-              className="fixed top-4 right-4 p-4 rounded-full botonMenu text-white shadow-lg z-50 hidden md:flex transition-transform duration-300 hover:scale-110"
-              onClick={() => setMenuOpen(!menuOpen)}
-            >
-              {menuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
-            </button>
-          )}
-        </>
+
+      {/* Botón flotante - Mobile (siempre visible) */}
+      {mounted && isMobile && (
+        <button
+          className="fixed top-4 right-4 p-4 rounded-full botonMenu text-white shadow-lg z-50 transition-transform duration-300 hover:scale-110"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
       )}
+
+      {/* Botón flotante - Desktop (solo cuando hay scroll) */}
+      {mounted && !isMobile && scrolled && (
+        <button
+          className="fixed top-4 right-4 p-4 rounded-full botonMenu text-white shadow-lg z-50 transition-transform duration-300 hover:scale-110"
+          onClick={() => {
+            setMenuOpen(!menuOpen);
+          }}
+        >
+          {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
+      )}
+
       {/* Menú vertical desplegable */}
       {menuOpen && (
         <div className="fixed top-16 right-0 w-full md:w-64 bg-white shadow-lg flex flex-col z-40 transition-transform duration-300 transform translate-x-0">

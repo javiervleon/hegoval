@@ -7,6 +7,8 @@ export default function Productos({
   selectedSearchItem,
 }) {
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [hoveredProduct, setHoveredProduct] = useState(null);
+  const [activeTooltip, setActiveTooltip] = useState(null);
 
   // Actualiza categoría si se selecciona desde búsqueda
   useEffect(() => {
@@ -29,6 +31,23 @@ export default function Productos({
     }
   }, [selectedSearchItem]);
 
+  // Cerrar tooltip al hacer click fuera
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        activeTooltip &&
+        !event.target.closest(`[data-product-id="${activeTooltip}"]`)
+      ) {
+        setActiveTooltip(null);
+      }
+    };
+
+    if (activeTooltip) {
+      document.addEventListener("click", handleClickOutside);
+      return () => document.removeEventListener("click", handleClickOutside);
+    }
+  }, [activeTooltip]);
+
   // Filtrar categorías y productos según searchQuery
   const normalizeText = (text) =>
     text
@@ -46,11 +65,50 @@ export default function Productos({
       (selectedCategory ? p.categoryId === selectedCategory : true)
   );
 
+  const handleProductInteraction = (productId, event) => {
+    event.stopPropagation();
+
+    // Detectar si es un dispositivo táctil
+    const isTouchDevice =
+      "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
+    if (isTouchDevice) {
+      // En dispositivos táctiles, alternar tooltip con tap
+      setActiveTooltip(activeTooltip === productId ? null : productId);
+    }
+  };
+
+  const handleMouseEnter = (productId) => {
+    // Solo activar hover en dispositivos no táctiles
+    const isTouchDevice =
+      "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    if (!isTouchDevice) {
+      setHoveredProduct(productId);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredProduct(null);
+  };
+
+  const isTooltipVisible = (productId) => {
+    const isTouchDevice =
+      "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    return isTouchDevice
+      ? activeTooltip === productId
+      : hoveredProduct === productId;
+  };
+
   return (
-    <section id="productos" className="py-16 bg-gray-50">
+    <section id="productos" className="py-16 relative overflow-hidden mt-2">
+      <img
+        src="/bg-pink.svg"
+        alt=""
+        className="absolute top-0 left-12 w-24 md:w-32 pointer-events-none select-none"
+      />
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">
-          Nuestros Productos
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-gray-400">
+          {!selectedCategory ? "Categorías de Productos" : "Productos"}
         </h2>
 
         {/* Grilla categorías si no hay categoría seleccionada */}
@@ -99,33 +157,41 @@ export default function Productos({
             {/* Botón volver */}
             <button
               onClick={() => setSelectedCategory(null)}
-              className="mb-4 bg-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300 transition"
+              className=" hover:text-gray-300 transition"
             >
               ← Volver a Categorías
             </button>
 
-            <h3 className="text-2xl md:text-3xl font-semibold mb-4">
-              {categories.find((c) => c.id === selectedCategory)?.name}
-            </h3>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {filteredProducts
                 .filter((p) => p.categoryId === selectedCategory)
-                .map((prod) => (
-                  <div
-                    key={prod.id}
-                    className="bg-white shadow-lg rounded-lg overflow-hidden hover:scale-105 transition-transform"
-                  >
-                    <img
-                      src={prod.img}
-                      alt={prod.name}
-                      className="w-full h-48 object-cover"
-                    />
-                    <div className="p-4 text-center">
-                      <h4 className="font-semibold">{prod.name}</h4>
+                .map((prod) => {
+                  return (
+                    <div
+                      key={prod.id}
+                      data-product-id={prod.id}
+                      className="relative group bg-white shadow-lg border-2 overflow-hidden cursor-pointer hover:scale-105 transition-transform"
+                      onClick={(e) => handleProductInteraction(prod.id, e)}
+                      onMouseEnter={() => handleMouseEnter(prod.id)}
+                      onMouseLeave={handleMouseLeave}
+                    >
+                      <img
+                        src={prod.imagen || prod.img}
+                        alt={prod.nombre || prod.name}
+                        className="w-55 h-55 md:w-45 md:h-45 object-cover"
+                      />
+                      <div className="p-4 text-center">
+                        <h4 className="font-semibold">
+                          {prod.nombre || prod.name}
+                        </h4>
+                        {/* Debug: mostrar si hay descripción */}
+                        <small className="text-gray-500">
+                          {prod.descripcion || "Sin descripción"}
+                        </small>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
             </div>
           </div>
         )}

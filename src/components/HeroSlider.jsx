@@ -50,7 +50,7 @@ export default function HeroSlider() {
     <section id="home" className="flex flex-col items-center">
       {/* Claim text y párrafo */}
       <div className="text-center mb-8 px-4 max-w-5xl mx-auto">
-        <h1 className="text-5xl md:text-6xl font-semibold text-gray-400">
+        <h1 className="text-5xl md:text-6xl font-bold text-gray-400">
           CLAIM TEXT - CLAIM TEXT
         </h1>
         <p className="text-lg text-gray-900 font-medium mt-6 mb-4 mx-auto max-w-3xl">

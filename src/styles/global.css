@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+html,
+body {
+  overflow-x: hidden;
+}
+
 .swiper-button-prev,
 .swiper-button-next {
   color: #2563eb; /* Azul Tailwind 600 */
@@ -29,4 +34,11 @@
 .btnElement:hover {
   background-color: #0e65b7;
   color: white;
+}
+
+.barraSeparadora {
+  background-image: url("/trama.svg");
+  background-repeat: repeat;
+  background-position: center;
+  background-size: 365px 340px;
 }

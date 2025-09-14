@@ -39,7 +39,12 @@ export default function Clientes() {
   };
 
   return (
-    <section id="clientes" className="py-16 bg-gray-50">
+    <section id="clientes" className="relative overflow-x-hidden py-16 mt-2">
+      <img
+        src="/bg-green.svg"
+        alt=""
+        className="absolute top-0 right-12 w-24 md:w-32 pointer-events-none select-none"
+      />
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
           Nuestros Clientes
@@ -67,9 +72,9 @@ export default function Clientes() {
         </div>
 
         {/* Botón CTA debajo del slider */}
-        <div className="text-center mt-6">
-          <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
-            Contáctanos
+        <div className="flex flex-col items-center text-center mt-6">
+          <button className="w-66 py-3 bg-black text-amber-300 text-lg font-semibold rounded-4xl hover:bg-gray-900 border-3 border-amber-300">
+            ¡Cotiza con nosotros!
           </button>
         </div>
 
@@ -109,8 +114,8 @@ export default function Clientes() {
 
               {/* Botón CTA centrado */}
               <div className="flex justify-center">
-                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
-                  Contáctanos
+                <button className="w-66 py-3 bg-black text-amber-300 text-lg font-semibold rounded-4xl hover:bg-gray-900 border-3 border-amber-300">
+                  Tengo un proyecto en mente
                 </button>
               </div>
 
@@ -119,7 +124,7 @@ export default function Clientes() {
                 className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-xl font-bold"
                 onClick={closeModal}
               >
-                ×
+                [x]
               </button>
             </div>
           </div>

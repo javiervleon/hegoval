@@ -21,7 +21,9 @@ export default function Features() {
   return (
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto text-center">
-        <h2 className="text-3xl font-bold mb-12">¿Por qué elegirnos?</h2>
+        <h2 className="text-3xl font-bold mb-12 text-gray-400">
+          ¿Por qué elegirnos?
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {features.map((f, i) => (
             <div key={i} className="p-6 bg-white shadow rounded-lg">
@@ -30,12 +32,20 @@ export default function Features() {
             </div>
           ))}
         </div>
-        <div className="mt-12">
+        <p className="mt-12 max-w-2xl mx-auto text-gray-900">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus debitis
+          corrupti eius quos modi dignissimos ducimus sit incidunt magnam
+          sapiente doloremque itaque voluptatem eveniet, exercitationem dolores
+          nulla fuga mollitia beatae eum rerum aperiam. Accusamus incidunt
+          recusandae enim dolores, accusantium ea optio modi consequuntur rerum
+          corporis odit quibusdam quidem voluptates omnis.
+        </p>
+        <div className="flex justify-center mt-12 relative z-10">
           <a
             href="#contacto"
-            className="px-8 py-4 bg-blue-600 text-white text-lg font-semibold rounded-lg shadow hover:bg-blue-700"
+            className="w-66 py-3 bg-black text-amber-300 text-lg font-semibold rounded-4xl hover:bg-gray-900 border-3 border-amber-300"
           >
-            Contáctanos Ahora
+            Cotiza con nosotros
           </a>
         </div>
       </div>
