@@ -1,20 +1,16 @@
 export default function Features() {
   const features = [
     {
-      title: "Calidad Garantizada",
-      desc: "Ofrecemos productos con los más altos estándares.",
+      title: "Más de 30 años en el mercado",
     },
     {
-      title: "Atención Personalizada",
-      desc: "Nuestro equipo está listo para ayudarte.",
+      title: "Rapidez en tiempos de entrega",
     },
     {
-      title: "Envíos Rápidos",
-      desc: "Llegamos a donde estés en tiempo récord.",
+      title: "Excelente relación precio calidad",
     },
     {
-      title: "Innovación Constante",
-      desc: "Siempre buscamos nuevas soluciones.",
+      title: "Cercanos y confiables",
     },
   ];
 
@@ -28,17 +24,11 @@ export default function Features() {
           {features.map((f, i) => (
             <div key={i} className="p-6 bg-white shadow rounded-lg">
               <h3 className="text-xl font-semibold mb-2">{f.title}</h3>
-              <p className="text-gray-600">{f.desc}</p>
             </div>
           ))}
         </div>
         <p className="mt-12 max-w-2xl mx-auto text-gray-900">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus debitis
-          corrupti eius quos modi dignissimos ducimus sit incidunt magnam
-          sapiente doloremque itaque voluptatem eveniet, exercitationem dolores
-          nulla fuga mollitia beatae eum rerum aperiam. Accusamus incidunt
-          recusandae enim dolores, accusantium ea optio modi consequuntur rerum
-          corporis odit quibusdam quidem voluptates omnis.
+          Somos un aliado estratégico para fortalecer tu marca.
         </p>
         <div className="flex justify-center mt-12 relative z-10">
           <a

@@ -3,18 +3,24 @@ import { MdMailOutline } from "react-icons/md";
 
 export default function Contacto() {
   return (
-    <section id="contacto" className="relative overflow-x-hidden py-16 mt-2">
+    <section
+      id="contacto"
+      className="relative overflow-x-hidden py-16 mt-2 -z-10"
+    >
       <img
         src="/bg-blue.svg"
         alt=""
-        className="absolute top-0 right-12 w-24 md:w-32 pointer-events-none select-none"
+        className="absolute top-0 right-2 md:right-12 w-24 md:w-32 pointer-events-none select-none"
       />
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-400">
           Contacto
         </h2>
-
-        <div className="flex flex-col lg:flex-row gap-8">
+        <p className="text-center text-gray-900 mb-8">
+          Grandes marcas y agencias han confiado en nosotros para innovar dentro
+          del mundo publicitario. Confía tú también.
+        </p>
+        <div className="flex flex-col lg:flex-row gap-8 pt-4">
           {/* Formulario */}
           <div className="flex-1 p-6">
             <form className="flex flex-col gap-4">
@@ -65,16 +71,16 @@ export default function Contacto() {
         </div>
         <div className="p-4 mt-2">
           <h3 className="font-semibold text-lg mb-2">Contáctanos</h3>
-          <div className="flex">
-            <span className="flex mx-2">
+          <div className="md:flex pt-2">
+            <span className="flex mx-2 mb-4 md:mb-0">
               <FaPhone className="h-5 w-5 mx-2" /> Teléfono:
               <a href="tel:+56912345678"> +56 9 1234 5678</a>
             </span>
-            <span className="flex mx-2">
+            <span className="flex mx-2 mb-4 md:mb-0">
               <MdMailOutline className="h-6 w-6 mx-2" /> Email:{" "}
               <a href="mailto:mail@empresa.com">info@empresa.com</a>
             </span>
-            <span className="flex mx-2">
+            <span className="flex mx-2 mb-4 md:mb-0">
               <FaWhatsapp className="h-6 w-6 mx-2" /> WhatsApp: +56 9 1234 5678{" "}
             </span>
 

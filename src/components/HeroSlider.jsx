@@ -51,13 +51,11 @@ export default function HeroSlider() {
       {/* Claim text y párrafo */}
       <div className="text-center mb-8 px-4 max-w-5xl mx-auto">
         <h1 className="text-5xl md:text-6xl font-bold text-gray-400">
-          CLAIM TEXT - CLAIM TEXT
+          IMPULSA TU MARCA CON NOSOTROS
         </h1>
         <p className="text-lg text-gray-900 font-medium mt-6 mb-4 mx-auto max-w-3xl">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam mollitia
-          temporibus incidunt deserunt molestiae? Officia, sapiente quaerat
-          neque vero eos in praesentium rem aliquam commodi optio aut.
-          Laboriosam, minima quae?
+          Creamos artículos publicitarios pensando en destacar tu marca en cada
+          detalle. Agencias y grandes empresas respaldan nuestro trabajo.
         </p>
       </div>
       <div className="w-full max-w-5xl md:rounded-xl overflow-hidden shadow-lg relative">

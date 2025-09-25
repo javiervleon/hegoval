@@ -43,15 +43,15 @@ export default function Clientes() {
       <img
         src="/bg-green.svg"
         alt=""
-        className="absolute top-0 right-12 w-24 md:w-32 pointer-events-none select-none"
+        className="absolute top-0 right-2 md:right-12 w-24 md:w-32 pointer-events-none select-none -z-10"
       />
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
+        <h2 className="text-gray-400 text-3xl md:text-4xl font-bold text-center mb-4">
           Nuestros Clientes
         </h2>
-        <p className="text-center text-gray-600 mb-8">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Blanditiis,
-          omnis.
+        <p className="text-center text-gray-900 mb-8 pt-4">
+          Grandes marcas y agencias han confiado en nosotros para innovar dentro
+          del mundo publicitario. Confía tú también.
         </p>
 
         {/* Slider de logos centrado y con scroll-snap */}

@@ -8,20 +8,22 @@ export default function Footer() {
         {/* Información de la empresa */}
         <div>
           <h3 className="font-bold text-lg mb-4">Nuestra Empresa</h3>
-          <p>Somos una empresa dedicada a brindar soluciones innovadoras.</p>
+          <p className="mb-3">
+            Somos una empresa dedicada a brindar soluciones innovadoras.
+          </p>
           <div>
             <div>
-              <span className="flex mx-2">
+              <span className="flex mx-2 mb-3">
                 <FaPhone className="h-5 w-5 mx-2" /> Teléfono:
                 <a href="tel:+56912345678"> +56 9 1234 5678</a>
               </span>
-              <span className="flex mx-2">
-                <MdMailOutline className="h-6 w-6 mx-2" /> Email:{" "}
-                <a href="mailto:mail@empresa.com">info@empresa.com</a>
+              <span className="flex mx-2 mb-3">
+                <MdMailOutline className="h-6 w-6 mx-2" /> Email:
+                <a href="mailto:mail@empresa.com"> info@empresa.com</a>
               </span>
-              <span className="flex mx-2">
+              <span className="flex mx-2 mb-3">
                 <FaWhatsapp className="h-6 w-6 mx-2" /> WhatsApp: +56 9 1234
-                5678{" "}
+                5678
               </span>
 
               <span className="flex mx-2">
@@ -100,7 +102,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="mt-8 text-center text-sm text-gray-400">
+      <div className="mt-8 text-center text-sm text-gray-400 my-5">
         © {new Date().getFullYear()} Hegoval - Artículos Publicitarios. Todos
         los derechos reservados.
       </div>

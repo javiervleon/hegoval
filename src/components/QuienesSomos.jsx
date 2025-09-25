@@ -7,7 +7,7 @@ export default function QuienesSomos() {
       <img
         src="/bg-qs.svg"
         alt=""
-        className="absolute top-0 right-12 w-24 md:w-32 pointer-events-none select-none"
+        className="absolute top-0 right-2 md:right-12 w-24 md:w-32 pointer-events-none select-none -z-10"
       />
 
       <div className="container mx-auto px-4 flex flex-col md:flex-row items-center gap-8 relative z-10">
@@ -49,18 +49,12 @@ export default function QuienesSomos() {
             Quienes Somos
           </h2>
           <p className="text-gray-900 text-lg md:text-base">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex est, cum
-            sed rem quae dolorem dolore veritatis cumque accusantium, qui magni
-            praesentium voluptates temporibus soluta, natus enim accusamus
-            aliquam quidem quisquam repellat sapiente consectetur ab. Maxime
-            reprehenderit explicabo adipisci, suscipit aut doloremque sequi
-            enim, inventore delectus, animi quia! Odit quos hic vel sapiente
-            repudiandae. Exercitationem voluptatibus ex cumque sint. Consequatur
-            unde provident explicabo nihil molestias ducimus similique
-            architecto nulla assumenda cumque dolorem, tempora, eius quaerat.
-            Consequatur debitis doloribus, ducimus veniam consequuntur sapiente
-            dolorem aut est placeat. Ex aut placeat minus pariatur, commodi
-            enim, quasi quam dolorum facilis quae quos eligendi!
+            Con más de 30 años en el mercado, nos hemos consolidado como un
+            socio estratégico en artículos publicitarios. Nuestra fortaleza está
+            en el equipo humano: personas comprometidas, capacitadas y
+            detallistas que transforman tu proyecto o tu marca en un producto de
+            calidad. La responsabilidad y puntualidad nos distinguen, cumpliendo
+            siempre con los plazos de entrega. Somos, Hegoval.
           </p>
         </motion.div>
       </div>
@@ -73,10 +67,6 @@ export default function QuienesSomos() {
         transition={{ duration: 0.8, delay: 0.3 }}
         viewport={{ once: true }}
       >
-        <p className="text-center mb-4 text-gray-900">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt,
-          inventore?
-        </p>
         <button className="w-66 py-3 bg-black text-amber-300 text-lg font-semibold rounded-4xl hover:bg-gray-900 border-3 border-amber-300">
           Quiero saber más
         </button>
