@@ -3,62 +3,78 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Autoplay, Pagination } from "swiper/modules";
-import { useRef } from "react";
-
-const ArrowPrev = () => (
-  <svg width="24" height="24" fill="none" stroke="white" strokeWidth="2">
-    <path d="M15 18l-6-6 6-6" />
-  </svg>
-);
-
-const ArrowNext = () => (
-  <svg width="24" height="24" fill="none" stroke="white" strokeWidth="2">
-    <path d="M9 6l6 6-6 6" />
-  </svg>
-);
+import { useRef, useEffect, useState } from "react";
 
 export default function HeroSlider() {
   const swiperRef = useRef(null);
+  const [slides, setSlides] = useState([]);
+
+  useEffect(() => {
+    const fetchSlides = async () => {
+      try {
+        // 🔹 1. Fetch video desde videoslider
+        const resVideo = await fetch(
+          "http://localhost:8881/wp-json/wp/v2/videoslider"
+        );
+        const videoData = await resVideo.json();
+
+        // suponiendo que solo hay 1 registro en videoslider
+        const videoSlide = videoData.length
+          ? {
+              type: "video",
+              src: videoData[0].acf.video, // si usas ACF
+              title: videoData[0].title.rendered,
+            }
+          : null;
+
+        // 🔹 2. Fetch imágenes desde slider
+        const resImages = await fetch(
+          "http://localhost:8881/wp-json/wp/v2/slider"
+        );
+        const imageData = await resImages.json();
+
+        const imageSlides = imageData.map((item) => ({
+          type: "image",
+          src: item.acf?.image_url,
+          title: item.title?.rendered,
+          subtitle: item.acf?.subtitle,
+        }));
+
+        // 🔹 3. Combinar => video primero, luego imágenes
+        const finalSlides = videoSlide
+          ? [videoSlide, ...imageSlides]
+          : imageSlides;
+
+        setSlides(finalSlides);
+      } catch (err) {
+        console.error("Error cargando slides:", err);
+      }
+    };
+
+    fetchSlides();
+  }, []);
 
   const handleVideoEnded = () => {
     if (swiperRef.current) {
-      swiperRef.current.swiper.slideNext();
+      swiperRef.current.slideNext();
+      swiperRef.current.autoplay.start(); // reanudar autoplay para siguientes slides
     }
   };
 
-  const slides = [
-    {
-      type: "video",
-      src: "/video/banner.mp4",
-      title: "Bienvenidos a Nuestra Empresa",
-    },
-    {
-      type: "content",
-      bgColor: "bg-blue-600",
-      title: "¡Oferta especial!",
-      subtitle: "Consulta nuestras promociones",
-    },
-    {
-      type: "content",
-      bgColor: "bg-green-600",
-      title: "Nuevo Producto",
-      subtitle: "Descubre lo último",
-    },
-  ];
+  const handleAutoplay = (activeIndex) => {
+    const activeSlide = slides[activeIndex];
+    if (!swiperRef.current) return;
+
+    if (activeSlide?.type === "video") {
+      swiperRef.current.autoplay.stop(); // pausa autoplay
+    } else {
+      swiperRef.current.autoplay.start(); // reanuda autoplay para slides normales
+    }
+  };
 
   return (
     <section id="home" className="flex flex-col items-center">
-      {/* Claim text y párrafo */}
-      <div className="text-center mb-8 px-4 max-w-5xl mx-auto">
-        <h1 className="text-5xl md:text-6xl font-bold text-gray-400">
-          IMPULSA TU MARCA CON NOSOTROS
-        </h1>
-        <p className="text-lg text-gray-900 font-medium mt-6 mb-4 mx-auto max-w-3xl">
-          Creamos artículos publicitarios pensando en destacar tu marca en cada
-          detalle. Agencias y grandes empresas respaldan nuestro trabajo.
-        </p>
-      </div>
-      <div className="w-full max-w-5xl md:rounded-xl overflow-hidden shadow-lg relative">
+      <div className="w-full max-w-7xl md:rounded-xl overflow-hidden shadow-lg relative">
         <Swiper
           modules={[Navigation, Autoplay, Pagination]}
           navigation={{
@@ -67,16 +83,20 @@ export default function HeroSlider() {
           }}
           pagination={{ clickable: true }}
           autoplay={{ delay: 5000, disableOnInteraction: false }}
-          loop
-          onSwiper={(swiper) => (swiperRef.current = swiper)}
+          loop={slides[0]?.type !== "video" ? false : true} // Si el primer slide es video, no hacer loop
+          onSwiper={(swiper) => {
+            swiperRef.current = swiper;
+            handleAutoplay(swiper.activeIndex); // inicial
+          }}
+          onSlideChange={(swiper) => handleAutoplay(swiper.activeIndex)}
           className="md:rounded-xl"
         >
           {slides.map((slide, idx) => (
             <SwiperSlide key={idx}>
               {slide.type === "video" ? (
-                <div className="relative w-full h-96 md:h-[500px]">
+                <div className="relative w-full aspect-[16/9]">
                   <video
-                    className="w-full h-full object-cover"
+                    className="absolute top-0 left-0 w-full h-full object-cover"
                     autoPlay
                     muted
                     playsInline
@@ -84,17 +104,15 @@ export default function HeroSlider() {
                   >
                     <source src={slide.src} type="video/mp4" />
                   </video>
-                  <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center px-4">
-                    <h1 className="text-2xl md:text-4xl font-bold text-white text-center">
-                      {slide.title}
-                    </h1>
-                  </div>
                 </div>
               ) : (
-                <div
-                  className={`flex items-center justify-center h-96 md:h-[500px] ${slide.bgColor}`}
-                >
-                  <div className="text-center px-4">
+                <div className="relative w-full aspect-[16/9]">
+                  <img
+                    src={slide.src}
+                    alt={slide.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 flex flex-col items-center justify-center px-4">
                     <h2 className="text-2xl md:text-4xl text-white font-bold mb-2">
                       {slide.title}
                     </h2>
@@ -110,7 +128,7 @@ export default function HeroSlider() {
           ))}
         </Swiper>
 
-        {/* Flechas personalizadas pegadas al borde y sin bordes redondeados */}
+        {/* Flechas */}
         <div className="absolute top-1/2 left-0 transform -translate-y-1/2 cursor-pointer custom-prev z-10">
           <div className="w-11 h-26 botonSlider flex items-center justify-center">
             <img
@@ -130,9 +148,6 @@ export default function HeroSlider() {
             />
           </div>
         </div>
-      </div>
-      <div>
-        <div className="featureContainer"></div>
       </div>
     </section>
   );

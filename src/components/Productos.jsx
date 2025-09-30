@@ -99,14 +99,6 @@ export default function Productos({
       : hoveredProduct === productId;
   };
 
-  // Clip path hexagon (works in modern browsers)
-  const hexClip = {
-    clipPath:
-      "polygon(25% 6.7%, 75% 6.7%, 100% 50%, 75% 93.3%, 25% 93.3%, 0% 50%)",
-    WebkitClipPath:
-      "polygon(25% 6.7%, 75% 6.7%, 100% 50%, 75% 93.3%, 25% 93.3%, 0% 50%)",
-  };
-
   return (
     <section id="productos" className="py-16 relative overflow-hidden mt-2">
       <img
@@ -122,44 +114,21 @@ export default function Productos({
           Te invitamos a conocer nuestro trabajo.
         </p>
 
-        {/* Grilla categorías si no hay categoría seleccionada */}
+        {/* Categorías centradas con flex */}
         {!selectedCategory && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+          <div className="flex flex-wrap justify-center gap-6">
             {filteredCategories.map((cat) => (
               <div
                 key={cat.id}
                 id={`category-${cat.id}`}
                 className="flex flex-col items-center gap-3"
               >
-                {/* Wrapper que crea el hexágono con borde y sombra */}
                 <div
                   onClick={() => setSelectedCategory(cat.id)}
-                  className="relative cursor-pointer transition-transform transform hover:scale-101"
+                  className="relative cursor-pointer transition-transform transform hover:scale-105"
                   style={{ width: 150, height: 150 }}
                   aria-hidden
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 100 100"
-                    className="absolute inset-0 w-full h-full z-0 pointer-events-none"
-                  >
-                    {/* Borde negro de 5 lados, grosor original 1 */}
-                    <polygon
-                      points="25,6.7 75,6.7 100,50 75,93.3 25,93.3 0,50"
-                      fill="none"
-                      stroke="black"
-                      strokeWidth="1"
-                    />
-                    {/* Cubrimos lado superior derecho con blanco */}
-                    <polygon
-                      points="75,6.7 100,50 75,6.7"
-                      fill="white"
-                      stroke="white"
-                      strokeWidth="2"
-                    />
-                  </svg>
-
-                  {/* Imagen con clip-path para hacerla hexagonal */}
                   <div
                     className="absolute inset-2 overflow-hidden"
                     style={{ borderRadius: 8 }}
@@ -172,7 +141,6 @@ export default function Productos({
                         height: "100%",
                         objectFit: "cover",
                         display: "block",
-                        ...hexClip,
                       }}
                     />
                   </div>
@@ -225,7 +193,7 @@ export default function Productos({
                     <div
                       key={prod.id}
                       data-product-id={prod.id}
-                      className="relative group bg-white shadow-lg border-2 overflow-hidden cursor-pointer hover:scale-105 transition-transform"
+                      className="relative group bg-white shadow-lg border-2 overflow-hidden cursor-pointer hover:scale-110 transition-transform"
                       onClick={(e) => handleProductInteraction(prod.id, e)}
                       onMouseEnter={() => handleMouseEnter(prod.id)}
                       onMouseLeave={handleMouseLeave}
@@ -233,7 +201,7 @@ export default function Productos({
                       <img
                         src={prod.imagen || prod.img}
                         alt={prod.nombre || prod.name}
-                        className="w-full h-60 object-cover"
+                        className="w-60 h-60 object-cover"
                       />
                       <div className="p-4 text-center">
                         <h4 className="font-semibold">

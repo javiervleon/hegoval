@@ -15,15 +15,24 @@ export default function Footer() {
             <div>
               <span className="flex mx-2 mb-3">
                 <FaPhone className="h-5 w-5 mx-2" /> Teléfono:
-                <a href="tel:+56912345678"> +56 9 1234 5678</a>
+                <a className="ml-1" href="tel:+56912345678">
+                  {" "}
+                  +56 9 1234 5678
+                </a>
               </span>
               <span className="flex mx-2 mb-3">
                 <MdMailOutline className="h-6 w-6 mx-2" /> Email:
-                <a href="mailto:mail@empresa.com"> info@empresa.com</a>
+                <a className="ml-1" href="mailto:mail@empresa.com">
+                  {" "}
+                  info@empresa.com
+                </a>
               </span>
               <span className="flex mx-2 mb-3">
-                <FaWhatsapp className="h-6 w-6 mx-2" /> WhatsApp: +56 9 1234
-                5678
+                <FaWhatsapp className="h-6 w-6 mx-2" /> WhatsApp:
+                <a className="ml-1" href="https://wa.me/56912345678">
+                  {" "}
+                  +56 9 1234 5678
+                </a>
               </span>
 
               <span className="flex mx-2">
@@ -102,7 +111,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="mt-8 text-center text-sm text-gray-400 my-5">
+      <div className="mt-8 text-center text-sm text-gray-400">
         © {new Date().getFullYear()} Hegoval - Artículos Publicitarios. Todos
         los derechos reservados.
       </div>

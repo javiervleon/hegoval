@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X, Search } from "lucide-react";
+import { FaPhone, FaWhatsapp } from "react-icons/fa";
+import { MdMailOutline } from "react-icons/md";
 
 export default function Header({
   categories,
@@ -174,27 +176,27 @@ export default function Header({
               href="tel:+56912345678"
               className="text-gray-600 hover:text-blue-600"
             >
-              📞
+              <FaPhone className="inline w-5 h-5 mr-1 text-white" />
             </a>
             <a
               href="mailto:info@empresa.com"
               className="text-gray-600 hover:text-blue-600"
             >
-              ✉️
+              <MdMailOutline className="inline w-6 h-6 mr-1 text-white" />
             </a>
             <a
               href="https://wa.me/56912345678"
               target="_blank"
               className="text-gray-600 hover:text-green-600"
             >
-              💬
+              <FaWhatsapp className="inline w-6 h-6 mr-1 text-white" />
             </a>
           </div>
         </div>
       </div>
 
       {/* Logo con fondo decorativo */}
-      <div className="pt-12 sm:pb-8 bg-white relative">
+      <div className="pt-6 sm:pt-2 bg-white relative">
         {/* Imagen decorativa pegada abajo */}
         <div className="absolute top-10 sm:top-7 left-1/2 -translate-x-1/2 w-full flex justify-center">
           <img
@@ -209,7 +211,7 @@ export default function Header({
           <img
             src="/logo.svg"
             alt="Logo Empresa"
-            className="h-22 sm:h-48 my-16 sm:my-22"
+            className="h-22 sm:h-48 my-12 sm:my-16"
           />
         </div>
       </div>

@@ -10,7 +10,7 @@ export default function Contacto() {
       <img
         src="/bg-blue.svg"
         alt=""
-        className="absolute top-0 right-2 md:right-12 w-24 md:w-32 pointer-events-none select-none"
+        className="absolute top-0 left-2 md:left-12 w-24 md:w-32 pointer-events-none select-none"
       />
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-400">
@@ -74,14 +74,20 @@ export default function Contacto() {
           <div className="md:flex pt-2">
             <span className="flex mx-2 mb-4 md:mb-0">
               <FaPhone className="h-5 w-5 mx-2" /> Teléfono:
-              <a href="tel:+56912345678"> +56 9 1234 5678</a>
+              <a className="ml-1" href="tel:+56912345678">
+                {" "}
+                +56 9 1234 5678
+              </a>
             </span>
             <span className="flex mx-2 mb-4 md:mb-0">
-              <MdMailOutline className="h-6 w-6 mx-2" /> Email:{" "}
-              <a href="mailto:mail@empresa.com">info@empresa.com</a>
+              <MdMailOutline className="h-6 w-6 mx-2" /> Email:
+              <a className="ml-1" href="mailto:info@empresa.com">
+                info@empresa.com
+              </a>
             </span>
             <span className="flex mx-2 mb-4 md:mb-0">
-              <FaWhatsapp className="h-6 w-6 mx-2" /> WhatsApp: +56 9 1234 5678{" "}
+              <FaWhatsapp className="h-6 w-6 mx-2" />
+              <a href="https://wa.me/56912345678"> WhatsApp: +56 9 1234 5678</a>
             </span>
 
             <span className="flex mx-2">
