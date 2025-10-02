@@ -1,10 +1,11 @@
 import { FaWhatsapp, FaPhone, FaMapPin } from "react-icons/fa";
 import { MdMailOutline } from "react-icons/md";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function Contacto({ phoneNumber, message }) {
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState({ message: "", type: "" });
+  const formRef = useRef(null);
 
   const handleWhatsAppClick = () => {
     const encodedMessage = encodeURIComponent(message);
@@ -21,14 +22,20 @@ export default function Contacto({ phoneNumber, message }) {
     e.preventDefault();
     setLoading(true);
 
-    const formData = new FormData(e.target);
+    const form = formRef.current;
+
+    // Creamos FormData incluyendo los campos ocultos que CF7 necesita
+    const formData = new FormData(form);
 
     try {
       const res = await fetch(
-        "https://panel.hegoval.cl/wp-json/contact-form-7/v1/contact-forms/30be037/feedback",
+        "https://panel.hegoval.cl/wp-json/contact-form-7/v1/contact-forms/59/feedback",
         {
           method: "POST",
           body: formData,
+          headers: {
+            // CF7 no necesita content-type manual, FormData lo hace automáticamente
+          },
         }
       );
 
@@ -36,7 +43,12 @@ export default function Contacto({ phoneNumber, message }) {
 
       if (result.status === "mail_sent") {
         showToast("✅ Mensaje enviado correctamente", "success");
-        e.target.reset();
+        form.reset();
+      } else if (result.status === "validation_failed") {
+        showToast(
+          "❌ Uno o más campos tienen un error. Por favor, revisa los datos.",
+          "error"
+        );
       } else {
         console.error(result);
         showToast(
@@ -54,24 +66,29 @@ export default function Contacto({ phoneNumber, message }) {
 
   return (
     <section id="contacto" className="relative overflow-x-hidden py-16 mt-2">
-      <img
-        src="/bg-blue.svg"
-        alt=""
-        className="absolute top-0 left-2 md:left-12 w-24 md:w-32 pointer-events-none select-none -z-10"
-      />
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-400">
           Contacto
         </h2>
-        <p className="text-center text-gray-900 mb-8">
-          Grandes marcas y agencias han confiado en nosotros para innovar dentro
-          del mundo publicitario. Confía tú también.
-        </p>
-
         <div className="flex flex-col lg:flex-row gap-8 pt-4">
           {/* Formulario */}
           <div className="flex-1 p-6">
-            <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+            <form
+              ref={formRef}
+              className="flex flex-col gap-4"
+              onSubmit={handleSubmit}
+            >
+              {/* Campos ocultos que CF7 necesita */}
+              <input type="hidden" name="_wpcf7" value="59" />
+              <input type="hidden" name="_wpcf7_version" value="5.8" />
+              <input type="hidden" name="_wpcf7_locale" value="es_ES" />
+              <input
+                type="hidden"
+                name="_wpcf7_unit_tag"
+                value="wpcf7-f59-p123-o1"
+              />
+              <input type="hidden" name="_wpcf7_container_post" value="59" />
+
               <label className="font-semibold">Nombre</label>
               <input
                 type="text"
@@ -109,7 +126,7 @@ export default function Contacto({ phoneNumber, message }) {
             </form>
           </div>
 
-          {/* Mapa e info */}
+          {/* Información y mapa */}
           <div className="flex-1 flex flex-col gap-4">
             <div className="w-full h-64 lg:h-full overflow-hidden">
               <iframe
@@ -125,6 +142,7 @@ export default function Contacto({ phoneNumber, message }) {
           </div>
         </div>
 
+        {/* Datos de contacto */}
         <div className="p-4 mt-2">
           <h3 className="font-semibold text-lg mb-2">Contáctanos</h3>
           <div className="md:flex pt-2 flex-wrap gap-2">
@@ -155,19 +173,19 @@ export default function Contacto({ phoneNumber, message }) {
             </span>
           </div>
         </div>
-      </div>
 
-      {/* Toast */}
-      {toast.message && (
-        <div
-          className={`fixed bottom-8 right-8 px-6 py-4 rounded shadow-lg text-white font-semibold transition-transform transform ${
-            toast.type === "success" ? "bg-green-600" : "bg-red-600"
-          } animate-slide-in`}
-          style={{ zIndex: 9999 }}
-        >
-          {toast.message}
-        </div>
-      )}
+        {/* Toast */}
+        {toast.message && (
+          <div
+            className={`fixed bottom-8 right-8 px-6 py-4 rounded shadow-lg text-white font-semibold transition-transform transform ${
+              toast.type === "success" ? "bg-green-600" : "bg-red-600"
+            } animate-slide-in`}
+            style={{ zIndex: 9999 }}
+          >
+            {toast.message}
+          </div>
+        )}
+      </div>
     </section>
   );
 }
