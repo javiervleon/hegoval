@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const API_URL = "http://localhost:8881/wp-json/wp/v2";
+const API_URL = "https://panel.hegoval.cl/wp-json/wp/v2";
 
 export function useWPData(endpoint) {
   const [data, setData] = useState([]);

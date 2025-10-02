@@ -1,6 +1,11 @@
 import { motion } from "framer-motion";
 
-export default function QuienesSomos() {
+export default function QuienesSomos({ phoneNumber, message }) {
+  const handleWhatsAppClick = () => {
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+    window.open(whatsappUrl, "_blank");
+  };
   return (
     <section id="about" className="py-16 relative overflow-hidden mt-2">
       {/* SVG de fondo en la esquina superior derecha */}
@@ -67,7 +72,10 @@ export default function QuienesSomos() {
         transition={{ duration: 0.8, delay: 0.3 }}
         viewport={{ once: true }}
       >
-        <button className="w-66 py-3 bg-black text-amber-300 text-lg font-semibold rounded-4xl hover:bg-gray-900 border-3 border-amber-300">
+        <button
+          onClick={handleWhatsAppClick}
+          className="cursor-pointer w-66 py-3 bg-black text-amber-300 text-lg font-semibold rounded-4xl hover:bg-gray-900 border-3 border-amber-300"
+        >
           Quiero saber más
         </button>
       </motion.div>

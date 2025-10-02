@@ -9,6 +9,8 @@ export default function Productos({
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [hoveredProduct, setHoveredProduct] = useState(null);
   const [activeTooltip, setActiveTooltip] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 12; // Máximo de productos por página
 
   // Actualiza categoría si se selecciona desde búsqueda
   useEffect(() => {
@@ -48,7 +50,6 @@ export default function Productos({
     }
   }, [activeTooltip]);
 
-  // Filtrar categorías y productos según searchQuery
   const normalizeText = (text) =>
     text
       .normalize("NFD")
@@ -65,21 +66,35 @@ export default function Productos({
       (selectedCategory ? p.categoryId === selectedCategory : true)
   );
 
+  // --- PAGINACIÓN ---
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = filteredProducts
+    .filter((p) => p.categoryId === selectedCategory)
+    .slice(indexOfFirstProduct, indexOfLastProduct);
+
+  const totalPages = Math.ceil(
+    filteredProducts.filter((p) => p.categoryId === selectedCategory).length /
+      productsPerPage
+  );
+
+  const handlePageChange = (page) => {
+    if (page < 1 || page > totalPages) return;
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   const handleProductInteraction = (productId, event) => {
     event.stopPropagation();
-
-    // Detectar si es un dispositivo táctil
     const isTouchDevice =
       "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
     if (isTouchDevice) {
-      // En dispositivos táctiles, alternar tooltip con tap
       setActiveTooltip(activeTooltip === productId ? null : productId);
     }
   };
 
   const handleMouseEnter = (productId) => {
-    // Solo activar hover en dispositivos no táctiles
     const isTouchDevice =
       "ontouchstart" in window || navigator.maxTouchPoints > 0;
     if (!isTouchDevice) {
@@ -160,7 +175,6 @@ export default function Productos({
         {/* Productos */}
         {selectedCategory && (
           <div className="flex flex-col items-center gap-6">
-            {/* Submenú categorías */}
             <div className="flex flex-wrap justify-center gap-4 mb-4 text-gray-700">
               {categories.map((cat) => (
                 <button
@@ -177,7 +191,6 @@ export default function Productos({
               ))}
             </div>
 
-            {/* Botón volver */}
             <button
               onClick={() => setSelectedCategory(null)}
               className=" hover:text-gray-300 transition"
@@ -186,35 +199,64 @@ export default function Productos({
             </button>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {filteredProducts
-                .filter((p) => p.categoryId === selectedCategory)
-                .map((prod) => {
-                  return (
-                    <div
-                      key={prod.id}
-                      data-product-id={prod.id}
-                      className="relative group bg-white shadow-lg border-2 overflow-hidden cursor-pointer hover:scale-110 transition-transform"
-                      onClick={(e) => handleProductInteraction(prod.id, e)}
-                      onMouseEnter={() => handleMouseEnter(prod.id)}
-                      onMouseLeave={handleMouseLeave}
-                    >
-                      <img
-                        src={prod.imagen || prod.img}
-                        alt={prod.nombre || prod.name}
-                        className="w-60 h-60 object-cover"
-                      />
-                      <div className="p-4 text-center">
-                        <h4 className="font-semibold">
-                          {prod.nombre || prod.name}
-                        </h4>
-                        <small className="text-gray-500">
-                          {prod.descripcion || "Sin descripción"}
-                        </small>
-                      </div>
-                    </div>
-                  );
-                })}
+              {currentProducts.map((prod) => (
+                <div
+                  key={prod.id}
+                  data-product-id={prod.id}
+                  className="relative group bg-white shadow-lg border-2 overflow-hidden cursor-pointer hover:scale-110 transition-transform"
+                  onClick={(e) => handleProductInteraction(prod.id, e)}
+                  onMouseEnter={() => handleMouseEnter(prod.id)}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <img
+                    src={prod.imagen || prod.img}
+                    alt={prod.nombre || prod.name}
+                    className="w-60 h-60 object-cover"
+                  />
+                  <div className="p-4 text-center">
+                    <h4 className="font-semibold">
+                      {prod.nombre || prod.name}
+                    </h4>
+                    <small className="text-gray-500">
+                      {prod.descripcion || "Sin descripción"}
+                    </small>
+                  </div>
+                </div>
+              ))}
             </div>
+
+            {/* Paginación */}
+            {totalPages > 1 && (
+              <div className="flex gap-2 mt-6">
+                <button
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  className="px-3 py-1 border rounded disabled:opacity-50"
+                >
+                  ←
+                </button>
+                {Array.from({ length: totalPages }, (_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => handlePageChange(i + 1)}
+                    className={`px-3 py-1 border rounded ${
+                      currentPage === i + 1
+                        ? "bg-blue-600 text-white"
+                        : "bg-white text-gray-700"
+                    }`}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
+                <button
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  className="px-3 py-1 border rounded disabled:opacity-50"
+                >
+                  →
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>

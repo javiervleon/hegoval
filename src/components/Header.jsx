@@ -9,6 +9,8 @@ export default function Header({
   sections,
   onSearch,
   onSelect,
+  phoneNumber,
+  message,
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -18,6 +20,11 @@ export default function Header({
   const [results, setResults] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const handleWhatsAppClick = () => {
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+    window.open(whatsappUrl, "_blank");
+  };
   // Detectar scroll y tamaño de pantalla
   useEffect(() => {
     // Marcar que el componente está montado
@@ -173,21 +180,21 @@ export default function Header({
           {/* Iconos de contacto */}
           <div className="hidden md:flex items-center gap-4">
             <a
-              href="tel:+56912345678"
+              href="tel:+56227791349"
               className="text-gray-600 hover:text-blue-600"
             >
               <FaPhone className="inline w-5 h-5 mr-1 text-white" />
             </a>
             <a
-              href="mailto:info@empresa.com"
+              href="mailto:hegoval@hegoval.cl"
               className="text-gray-600 hover:text-blue-600"
             >
               <MdMailOutline className="inline w-6 h-6 mr-1 text-white" />
             </a>
             <a
-              href="https://wa.me/56912345678"
+              onClick={handleWhatsAppClick}
               target="_blank"
-              className="text-gray-600 hover:text-green-600"
+              className="cursor-pointer text-gray-600 hover:text-green-600"
             >
               <FaWhatsapp className="inline w-6 h-6 mr-1 text-white" />
             </a>
@@ -211,7 +218,7 @@ export default function Header({
           <img
             src="/logo.svg"
             alt="Logo Empresa"
-            className="h-22 sm:h-48 my-12 sm:my-16"
+            className="h-16 sm:h-48 my-12 sm:my-16"
           />
         </div>
       </div>

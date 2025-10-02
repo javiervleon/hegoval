@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 
-export default function Clientes() {
+export default function Clientes({ phoneNumber, message }) {
+  const handleWhatsAppClick = () => {
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+    window.open(whatsappUrl, "_blank");
+  };
   const [clientes, setClientes] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedClient, setSelectedClient] = useState(null);
@@ -9,7 +14,9 @@ export default function Clientes() {
   useEffect(() => {
     const fetchClientes = async () => {
       try {
-        const res = await fetch("http://localhost:8881/wp-json/wp/v2/clientes");
+        const res = await fetch(
+          "https://panel.hegoval.cl/wp-json/wp/v2/clientes"
+        );
         const data = await res.json();
         // Mapear los datos a un formato más simple
         const formatted = data.map((cliente) => ({
@@ -72,7 +79,10 @@ export default function Clientes() {
 
         {/* Botón CTA */}
         <div className="flex flex-col items-center text-center mt-6">
-          <button className="w-66 py-3 bg-black text-amber-300 text-lg font-semibold rounded-4xl hover:bg-gray-900 border-3 border-amber-300">
+          <button
+            onClick={handleWhatsAppClick}
+            className="cursor-pointer w-66 py-3 bg-black text-amber-300 text-lg font-semibold rounded-4xl hover:bg-gray-900 border-3 border-amber-300"
+          >
             ¡Cotiza con nosotros!
           </button>
         </div>
@@ -114,7 +124,10 @@ export default function Clientes() {
 
               {/* Botón CTA */}
               <div className="flex justify-center">
-                <button className="w-66 py-3 bg-black text-amber-300 text-lg font-semibold rounded-4xl hover:bg-gray-900 border-3 border-amber-300">
+                <button
+                  onClick={handleWhatsAppClick}
+                  className="cursor-pointer w-66 py-3 bg-black text-amber-300 text-lg font-semibold rounded-4xl hover:bg-gray-900 border-3 border-amber-300"
+                >
                   Tengo un proyecto en mente
                 </button>
               </div>

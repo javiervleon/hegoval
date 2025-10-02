@@ -14,7 +14,7 @@ export default function HeroSlider() {
       try {
         // 🔹 1. Fetch video desde videoslider
         const resVideo = await fetch(
-          "http://localhost:8881/wp-json/wp/v2/videoslider"
+          "https://panel.hegoval.cl/wp-json/wp/v2/videoslider"
         );
         const videoData = await resVideo.json();
 
@@ -29,7 +29,7 @@ export default function HeroSlider() {
 
         // 🔹 2. Fetch imágenes desde slider
         const resImages = await fetch(
-          "http://localhost:8881/wp-json/wp/v2/slider"
+          "https://panel.hegoval.cl/wp-json/wp/v2/slider"
         );
         const imageData = await resImages.json();
 

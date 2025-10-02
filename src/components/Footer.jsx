@@ -1,7 +1,12 @@
 import { FaWhatsapp, FaPhone, FaMapPin } from "react-icons/fa";
 import { MdMailOutline } from "react-icons/md";
 
-export default function Footer() {
+export default function Footer({ phoneNumber, message }) {
+  const handleWhatsAppClick = () => {
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+    window.open(whatsappUrl, "_blank");
+  };
   return (
     <footer className="bg-gray-800 text-gray-200 py-10 w-full">
       <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -15,29 +20,32 @@ export default function Footer() {
             <div>
               <span className="flex mx-2 mb-3">
                 <FaPhone className="h-5 w-5 mx-2" /> Teléfono:
-                <a className="ml-1" href="tel:+56912345678">
+                <a className="ml-1" href="tel:+56227791349">
                   {" "}
-                  +56 9 1234 5678
+                  +56227791349
                 </a>
               </span>
               <span className="flex mx-2 mb-3">
                 <MdMailOutline className="h-6 w-6 mx-2" /> Email:
-                <a className="ml-1" href="mailto:mail@empresa.com">
+                <a className="ml-1" href="mailto:hegoval@hegoval.cl">
                   {" "}
-                  info@empresa.com
+                  hegoval@hegoval.cl
                 </a>
               </span>
               <span className="flex mx-2 mb-3">
                 <FaWhatsapp className="h-6 w-6 mx-2" /> WhatsApp:
-                <a className="ml-1" href="https://wa.me/56912345678">
+                <a
+                  className="ml-1 cursor-pointer"
+                  onClick={handleWhatsAppClick}
+                >
                   {" "}
-                  +56 9 1234 5678
+                  +{phoneNumber}
                 </a>
               </span>
 
               <span className="flex mx-2">
-                <FaMapPin className="mx-2 w-5 h-5" /> Dirección: Calle Falsa
-                123, Ciudad, País
+                <FaMapPin className="mx-2 w-5 h-5" /> Dirección: San Gumercindo
+                35, Estación Central, Santiago, Chile
               </span>
             </div>
           </div>

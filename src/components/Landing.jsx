@@ -9,6 +9,7 @@ import Clientes from "./Clientes.jsx";
 import Features from "./Features.jsx";
 import WhatsAppButton from "./WhatsappButton.jsx";
 import SectionDivider from "./SectionDivider.jsx";
+import Instagram from "./Instagram.jsx";
 
 const sectionsData = [
   { id: "home", name: "Inicio", content: "Bienvenido a nuestra empresa..." },
@@ -36,44 +37,61 @@ export default function Landing() {
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
 
-  // Cargar categorías desde la REST API
+  // Estado para el número de WhatsApp
+  const [whatsappConfig, setWhatsappConfig] = useState({
+    phoneNumber: "",
+    message: "",
+  });
+
+  // Cargar configuración de WhatsApp desde WP
   useEffect(() => {
-    fetch("http://localhost:8881/wp-json/wp/v2/categoria")
+    fetch("https://panel.hegoval.cl/wp-json/wp/v2/whatsapp")
       .then((res) => res.json())
       .then((data) => {
-        const cats = data.map((c) => ({
-          id: c.id,
-          name: c.acf?.nombre ?? c.title.rendered,
-          img: c.acf?.imagen ?? "",
-        }));
+        if (data.length > 0) {
+          setWhatsappConfig({
+            phoneNumber: data[0].acf?.numero ?? "",
+            message:
+              data[0].acf?.mensaje ??
+              "¡Hola! Me interesa obtener más información sobre sus productos.",
+          });
+        }
+      })
+      .catch((err) => console.error("Error cargando configuración:", err));
+  }, []);
+
+  // Cargar categorías desde WP
+  useEffect(() => {
+    fetch("https://panel.hegoval.cl/wp-json/wp/v2/categoria")
+      .then((res) => res.json())
+      .then((data) => {
+        const cats = data
+          .slice() // copiamos para no mutar
+          .reverse() // invertimos orden
+          .map((c) => ({
+            id: c.id,
+            name: c.acf?.nombre ?? c.title.rendered,
+            img: c.acf?.imagen ?? "",
+          }));
         setCategories(cats);
       });
   }, []);
 
-  // Cargar productos desde la REST API
-  // En tu Landing.jsx, modifica el useEffect así:
+  // Cargar productos desde WP
   useEffect(() => {
-    fetch("http://localhost:8881/wp-json/wp/v2/producto")
+    fetch("https://panel.hegoval.cl/wp-json/wp/v2/producto")
       .then((res) => res.json())
       .then((data) => {
-        // DEBUG: Ver qué llega de la API
-        console.log("=== DATOS DE LA API ===");
-        console.log("Primer producto completo:", data[0]);
-        console.log("data[0].acf:", data[0].acf);
-        console.log("data[0].acf.descripcion:", data[0].acf?.descripcion);
-        console.log("========================");
-
-        const prods = data.map((p) => ({
-          id: p.id,
-          name: p.acf?.nombre ?? p.title.rendered,
-          categoryId: p.acf?.categoria?.ID ?? null,
-          img: p.acf?.imagen ?? "",
-          descripcion: p.acf?.descripcion ?? "", // Agregar esta línea
-        }));
-
-        // DEBUG: Ver el producto transformado
-        console.log("Producto transformado:", prods[0]);
-
+        const prods = data
+          .slice()
+          .reverse()
+          .map((p) => ({
+            id: p.id,
+            name: p.acf?.nombre ?? p.title.rendered,
+            categoryId: p.acf?.categoria?.ID ?? null,
+            img: p.acf?.imagen ?? "",
+            descripcion: p.acf?.descripcion ?? "",
+          }));
         setProducts(prods);
       });
   }, []);
@@ -81,6 +99,9 @@ export default function Landing() {
   return (
     <>
       <Header
+        client:load
+        phoneNumber={whatsappConfig.phoneNumber}
+        message={whatsappConfig.message}
         categories={categories}
         products={products}
         sections={sectionsData}
@@ -90,27 +111,51 @@ export default function Landing() {
 
       <main className="pt-4 sm:pt-14">
         <HeroSlider client:load />
-        <Features client:load />
+        <Features
+          client:load
+          phoneNumber={whatsappConfig.phoneNumber}
+          message={whatsappConfig.message}
+        />
         <SectionDivider />
-        <QuienesSomos client:load />
+        <QuienesSomos
+          client:load
+          phoneNumber={whatsappConfig.phoneNumber}
+          message={whatsappConfig.message}
+        />
         <SectionDivider />
         <Productos
           categories={categories}
           products={products}
           searchQuery={searchQuery}
           selectedSearchItem={selectedSearchItem}
+          phoneNumber={whatsappConfig.phoneNumber}
+          message={whatsappConfig.message}
         />
         <SectionDivider />
-        <Clientes />
+        <Clientes
+          phoneNumber={whatsappConfig.phoneNumber}
+          message={whatsappConfig.message}
+        />
         <SectionDivider />
-        <Contacto client:load />
+        <Contacto
+          client:load
+          phoneNumber={whatsappConfig.phoneNumber}
+          message={whatsappConfig.message}
+        />
+        <SectionDivider />
+        <Instagram client:load />
       </main>
 
-      <Footer />
+      <Footer
+        phoneNumber={whatsappConfig.phoneNumber}
+        message={whatsappConfig.message}
+        client:load
+      />
 
+      {/* Botón flotante WhatsApp */}
       <WhatsAppButton
-        phoneNumber="56912345678"
-        message="¡Hola! Me interesa obtener más información sobre sus productos."
+        phoneNumber={whatsappConfig.phoneNumber}
+        message={whatsappConfig.message}
         client:load
       />
     </>

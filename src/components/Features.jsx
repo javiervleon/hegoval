@@ -1,4 +1,9 @@
-export default function Features() {
+export default function Features({ phoneNumber, message }) {
+  const handleWhatsAppClick = () => {
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+    window.open(whatsappUrl, "_blank");
+  };
   const features = [
     {
       title: "Más de 30 años en el mercado",
@@ -41,8 +46,8 @@ export default function Features() {
         </p>
         <div className="flex justify-center mt-12 relative z-10">
           <a
-            href="#contacto"
-            className="w-66 py-3 bg-black text-amber-300 text-lg font-semibold rounded-4xl hover:bg-gray-900 border-3 border-amber-300"
+            className="cursor-pointer w-66 py-3 bg-black text-amber-300 text-lg font-semibold rounded-4xl hover:bg-gray-900 border-3 border-amber-300"
+            onClick={handleWhatsAppClick}
           >
             Cotiza con nosotros
           </a>

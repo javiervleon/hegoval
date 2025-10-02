@@ -1,11 +1,60 @@
+---
+const {
+  title = "Hegoval | Artículos Publicitarios en Chile",
+  description = "Hegoval, empresa en Estación Central, Santiago de Chile. Fabricamos artículos publicitarios personalizados: llaveros, souvenirs y merchandising corporativo para empresas.",
+  image = "/logo.svg" // cámbiala por tu imagen de preview en redes sociales
+} = Astro.props;
+---
+
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content="artículos publicitarios Chile, souvenirs corporativos, llaveros personalizados, merchandising, regalos empresariales" />
     <meta name="generator" content={Astro.generator} />
-    <title>Hegoval | Artículos Publicitarios</title>
+
+    <!-- Canonical -->
+    <link rel="canonical" href={Astro.url.href} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_CL" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+
+    <!-- Datos estructurados JSON-LD -->
+    <script type="application/ld+json">
+      {JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Hegoval",
+        "image": image,
+        "url": Astro.site,
+        "logo": "/favicon.svg",
+        "description": description,
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Estación Central",
+          "addressRegion": "Santiago",
+          "addressCountry": "CL"
+        },
+        "sameAs": [
+          "https://instagram.com/hegoval_"
+        ]
+      })}
+    </script>
   </head>
   <body>
     <slot />
