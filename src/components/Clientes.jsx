@@ -65,7 +65,7 @@ export default function Clientes({ phoneNumber, message }) {
           {clientes.map((cliente) => (
             <div
               key={cliente.id}
-              className="flex-shrink-0 w-32 h-32 bg-white shadow-lg rounded-lg flex items-center justify-center cursor-pointer hover:scale-105 transition-transform snap-center"
+              className="flex-shrink-0 w-32 h-32 bg-white rounded-lg flex items-center justify-center cursor-pointer hover:scale-105 transition-transform snap-center"
               onClick={() => openModal(cliente)}
             >
               <img

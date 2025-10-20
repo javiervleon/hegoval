@@ -79,7 +79,7 @@ export default function Landing() {
 
   // Cargar productos desde WP
   useEffect(() => {
-    fetch("https://panel.hegoval.cl/wp-json/wp/v2/producto")
+    fetch("https://panel.hegoval.cl/wp-json/wp/v2/producto?per_page=100")
       .then((res) => res.json())
       .then((data) => {
         const prods = data

@@ -114,6 +114,10 @@ export default function Productos({
       : hoveredProduct === productId;
   };
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory]);
+
   return (
     <section id="productos" className="py-16 relative overflow-hidden mt-2">
       <img
@@ -131,7 +135,7 @@ export default function Productos({
 
         {/* Categorías centradas con flex */}
         {!selectedCategory && (
-          <div className="flex flex-wrap justify-center gap-6">
+          <div className="flex flex-wrap justify-center gap-12">
             {filteredCategories.map((cat) => (
               <div
                 key={cat.id}
@@ -141,7 +145,7 @@ export default function Productos({
                 <div
                   onClick={() => setSelectedCategory(cat.id)}
                   className="relative cursor-pointer transition-transform transform hover:scale-105"
-                  style={{ width: 150, height: 150 }}
+                  style={{ width: 180, height: 180 }}
                   aria-hidden
                 >
                   <div

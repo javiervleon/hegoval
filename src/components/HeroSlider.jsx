@@ -113,11 +113,11 @@ export default function HeroSlider() {
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 flex flex-col items-center justify-center px-4">
-                    <h2 className="text-2xl md:text-4xl text-white font-bold mb-2">
+                    <h2 className="text-2xl md:text-4xl text-white font-bold mb-2 text-shadow-lg/30">
                       {slide.title}
                     </h2>
                     {slide.subtitle && (
-                      <p className="text-white text-lg md:text-2xl">
+                      <p className="text-white text-lg md:text-2xl text-shadow-lg/30">
                         {slide.subtitle}
                       </p>
                     )}

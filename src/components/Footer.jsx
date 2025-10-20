@@ -88,32 +88,11 @@ export default function Footer({ phoneNumber, message }) {
           <h3 className="font-bold text-lg mb-4">Síguenos</h3>
           <div className="flex gap-4">
             <a
-              href="https://facebook.com"
-              target="_blank"
-              className="hover:text-white transition"
-            >
-              📘
-            </a>
-            <a
-              href="https://twitter.com"
-              target="_blank"
-              className="hover:text-white transition"
-            >
-              🐦
-            </a>
-            <a
-              href="https://instagram.com"
+              href="https://instagram.com/hegoval_"
               target="_blank"
               className="hover:text-white transition"
             >
               📸
-            </a>
-            <a
-              href="https://linkedin.com"
-              target="_blank"
-              className="hover:text-white transition"
-            >
-              🔗
             </a>
           </div>
         </div>
